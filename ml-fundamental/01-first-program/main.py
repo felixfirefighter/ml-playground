@@ -1,13 +1,22 @@
 # Plot the reservations/pizzas dataset.
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sea
-sea.set()
-plt.axis([0, 50, 0, 50])                                 # scale axes (0 to 50)
-plt.xticks(fontsize=14)                                  # set x axis ticks
-plt.yticks(fontsize=14)                                  # set y axis ticks
-plt.xlabel("Reservations", fontsize=14)                  # set x axis label
-plt.ylabel("Pizzas", fontsize=14)                        # set y axis label
+import seaborn as sns
+from function import train, predict
+
+sns.set()
+
 X, Y = np.loadtxt("pizza.txt", skiprows=1, unpack=True)  # load data
-plt.plot(X, Y, "bo")                                     # plot data
-plt.show()                                               # display chart
+
+w = train(X, Y, iterations=10000, lr=0.01)
+print("\nw=%.3f" % w)
+print("Prediction: x=%d => y=%.2f" % (20, predict(20, w)))
+
+plt.plot(X, Y, "bo")
+plt.xlabel("Reservations")
+plt.ylabel("Pizzas")
+x_edge, y_edge = 50, 50
+plt.axis([0, x_edge, 0, y_edge])
+plt.plot([0, x_edge], [0, predict(x_edge, w)], linewidth=1.0, color="g")
+plt.show()
+
