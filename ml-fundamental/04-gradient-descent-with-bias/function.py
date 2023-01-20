@@ -16,7 +16,7 @@ def gradient(X, Y, w, b):
 def train(X, Y, iterations, lr):
     w = b = 0
     for i in range(iterations):
-        if (i % 5000 == 0):
+        if (i % 100 == 0):
             print("Iteration %4d => Loss: %.10f" % (i, loss(X, Y, w, b)))
         w_gradient, b_gradient = gradient(X, Y, w, b)
         w -= w_gradient * lr
